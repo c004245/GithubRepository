@@ -1,9 +1,14 @@
 package hyunwook.co.kr.githubrepository;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
+import io.reactivex.disposables.Disposable;
+
 public class MainActivity extends AppCompatActivity {
+
+    GithubClient client;
+    private Disposable disposable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
