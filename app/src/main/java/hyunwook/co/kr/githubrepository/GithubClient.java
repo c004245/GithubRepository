@@ -11,6 +11,10 @@ import java.lang.reflect.Type;
 
 import hyunwook.co.kr.githubrepository.model.GithubInfo;
 import hyunwook.co.kr.githubrepository.model.GithubRepository;
+import okhttp3.OkHttpClient;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class GithubClient {
 
@@ -32,5 +36,19 @@ public class GithubClient {
 
             return githubRepository;
         }
+    }
+
+    public GithubApi getApi() {
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(GithubRepository.class, new GithubRepoDeserializer())
+                .create();
+
+        return new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .client(new OkHttpClient())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build()
+                .create(GithubApi.class);
     }
 }
