@@ -14,7 +14,7 @@ public interface GithubApi {
     @GET("users/{username}")
     Single<GithubInfo> getInfo(@Path("username") String username);
 
-    @GET("users/{username}/repos")
-    Single<List<GithubRepository>> getRepos(@Path("username") String username);
+    @GET("users/{owner}/repos")
+    Single<List<GithubRepository>> getRepos(@Path("owner") String owner);
 
 }

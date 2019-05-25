@@ -1,5 +1,7 @@
 package hyunwook.co.kr.githubrepository;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializationContext;
@@ -27,12 +29,15 @@ public class GithubClient {
             GithubRepository githubRepository = new GithubRepository();
 
             JsonObject repoJsonObject = json.getAsJsonObject();
-            JsonElement userJsonElement = repoJsonObject.get("username");
+            JsonElement userJsonElement = repoJsonObject.get("owner");
             JsonObject userJsonObject = userJsonElement.getAsJsonObject();
-
-            githubRepository.name = userJsonObject.get("name").getAsString();
-            githubRepository.description = userJsonObject.get("description").getAsString();
-            githubRepository.stargazers_count = userJsonObject.get("stargazers_count").getAsString();
+            githubRepository.name = repoJsonObject.get("name").getAsString();
+            if (repoJsonObject.get("description").isJsonNull()) {
+                githubRepository.description = "";
+            } else {
+                githubRepository.description = repoJsonObject.get("description").getAsString();
+            }
+            githubRepository.stargazers_count = repoJsonObject.get("stargazers_count").getAsString();
 
             return githubRepository;
         }
