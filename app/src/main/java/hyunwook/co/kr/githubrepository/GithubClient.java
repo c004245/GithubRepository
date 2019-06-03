@@ -20,6 +20,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class GithubClient {
 
+    private static final String TAG = GithubClient.class.getSimpleName();
+
     private static final String BASE_URL = "https://api.github.com";
 
     private static final class GithubRepoDeserializer implements JsonDeserializer<GithubRepository> {
@@ -42,7 +44,6 @@ public class GithubClient {
             return githubRepository;
         }
     }
-
     public GithubApi getApi() {
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(GithubRepository.class, new GithubRepoDeserializer())
@@ -55,5 +56,13 @@ public class GithubClient {
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
                 .create(GithubApi.class);
+    }
+
+    public Retrofit getInfoApi() {
+
+        return new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
     }
 }
