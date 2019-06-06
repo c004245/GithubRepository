@@ -7,11 +7,13 @@ import android.util.Log;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import androidx.databinding.DataBindingUtil;
 import hyunwook.co.kr.githubrepository.adapter.RepositoryAdapter;
 import hyunwook.co.kr.githubrepository.databinding.ActivityMainBinding;
 import hyunwook.co.kr.githubrepository.model.GithubInfo;
+import hyunwook.co.kr.githubrepository.model.GithubRepository;
 import io.reactivex.Scheduler;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -42,10 +44,36 @@ public class MainActivity extends AppCompatActivity {
         binding.recyclerView.setAdapter(adapter);
 
         client = new GithubClient();
-        disposable = client.getApi().getRepos(OWNER)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(items -> adapter.updateItems(items));
+//        disposable = client.getApi().getRepos(OWNER)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+////                .subscribeOn(Scheduler.)
+//                .subscribe(items -> adapter.updateItems(items));
+
+        Retrofit ret = client.getRepoApi();
+        GithubApi repoAPi = ret.create(GithubApi.class);
+        Call<List<GithubRepository>> resultRepo = repoAPi.getRepos(OWNER);
+
+        resultRepo.enqueue(new Callback<List<GithubRepository>>() {
+            @Override
+            public void onResponse(Call<List<GithubRepository>> call, Response<List<GithubRepository>> response) {
+
+//                for (int i = 0;  i <response.body().size(); i++) {
+                    Log.d(TAG, "onResponse name ---->" +response.body().get(0).name);
+                    Log.d(TAG, "onResponse description---->" +response.body().get(0).description);
+                    Log.d(TAG, "onResponse star---->" +response.body().get(0).stargazers_count);
+//
+//                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<List<GithubRepository>> call, Throwable t) {
+
+            }
+        });
+
 
 
         Retrofit retrofit = client.getInfoApi();

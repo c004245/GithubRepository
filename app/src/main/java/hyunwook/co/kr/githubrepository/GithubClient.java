@@ -44,18 +44,25 @@ public class GithubClient {
             return githubRepository;
         }
     }
-    public GithubApi getApi() {
-        Gson gson = new GsonBuilder()
-                .registerTypeAdapter(GithubRepository.class, new GithubRepoDeserializer())
-                .create();
+//    public GithubApi getApi() {
+//        Gson gson = new GsonBuilder()
+//                .registerTypeAdapter(GithubRepository.class, new GithubRepoDeserializer())
+//                .create();
+//
+//        return new Retrofit.Builder()
+//                .baseUrl(BASE_URL)
+//                .client(new OkHttpClient())
+//                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+//                .addConverterFactory(GsonConverterFactory.create(gson))
+//                .build()
+//                .create(GithubApi.class);
+//    }
 
+    public Retrofit getRepoApi() {
         return new Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                .client(new OkHttpClient())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build()
-                .create(GithubApi.class);
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
     }
 
     public Retrofit getInfoApi() {

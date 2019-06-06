@@ -1,11 +1,14 @@
 package hyunwook.co.kr.githubrepository.adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -24,6 +27,7 @@ public class RepositoryAdapter extends RecyclerView.Adapter<RepositoryAdapter.Vi
 
     public void updateItems(List<GithubRepository> items) {
 //    public void updateItem(GithubInfo items) {
+        Log.d("TEST", "updateItems ->" + items.size());
         this.repos.clear();
         this.repos.addAll(items);
         notifyDataSetChanged();
@@ -38,6 +42,7 @@ public class RepositoryAdapter extends RecyclerView.Adapter<RepositoryAdapter.Vi
 
     @Override
     public void onBindViewHolder(RepositoryAdapter.ViewHolder holder, int position) {
+        Log.d("TEST", "respose ->" + repos.get(position).stargazers_count);
         holder.bind(repos.get(position));
     }
 
