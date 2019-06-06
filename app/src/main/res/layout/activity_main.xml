@@ -2,26 +2,27 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <RelativeLayout
-            android:id="@+id/rlProfile"
+            android:id="@+id/llProfile"
             android:layout_width="match_parent"
             android:layout_height="100dp" >
 
             <ImageView
                 android:id="@+id/ivProfile"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"/>
+                android:layout_width="100dp"
+                android:layout_height="100dp" />
 
             <TextView
                 android:id="@+id/tvName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/ivProfile"
+                android:layout_gravity="center_vertical"
+                android:layout_toEndOf="@+id/ivProfile"
                 android:textStyle="bold"
                 android:textSize="20sp"/>
         </RelativeLayout>
@@ -30,11 +31,9 @@
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintTop_toBottomOf="@+id/rlProfile"
-            >
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" >
 
         </androidx.recyclerview.widget.RecyclerView>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 </layout>
